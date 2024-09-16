@@ -1,0 +1,159 @@
+[gd_scene load_steps=11 format=3 uid="uid://bkqj61nwsq4jl"]
+
+[ext_resource type="Script" path="res://pong_main.gd" id="1_7eydu"]
+[ext_resource type="Script" path="res://paddle.gd" id="1_nhl4e"]
+[ext_resource type="Script" path="res://paddle_ai.gd" id="2_n5kwi"]
+[ext_resource type="Script" path="res://ball.gd" id="2_nvxf8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1hljj"]
+size = Vector2(280, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_thy8a"]
+size = Vector2(1280, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_afvch"]
+size = Vector2(30, 30)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_yrhdo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cqg7a"]
+size = Vector2(20, 6)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_b6ti4"]
+a = Vector2(-50, 0)
+b = Vector2(50, 0)
+
+[node name="Pong" type="Node2D"]
+position = Vector2(0, -1)
+script = ExtResource("1_7eydu")
+
+[node name="RestartTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -640.0
+offset_top = -360.0
+offset_right = -360.0
+offset_bottom = 360.0
+color = Color(0, 0, 0.741176, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = 360.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0.61, 0, 0, 1)
+
+[node name="ScoreLabel" type="RichTextLabel" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -562.0
+offset_top = -200.0
+offset_right = -401.0
+offset_bottom = 223.0
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 100
+text = "0
+
+0"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Walls" type="StaticBody2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-500, 0)
+shape = SubResource("RectangleShape2D_1hljj")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(500, 0)
+shape = SubResource("RectangleShape2D_1hljj")
+
+[node name="GoalP1" type="Area2D" parent="."]
+position = Vector2(0, 351)
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalP1"]
+shape = SubResource("RectangleShape2D_thy8a")
+
+[node name="GoalP2" type="Area2D" parent="."]
+position = Vector2(0, -350)
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoalP2"]
+shape = SubResource("RectangleShape2D_thy8a")
+
+[node name="Ball" type="CharacterBody2D" parent="." groups=["ball"]]
+position = Vector2(-300, 0)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("2_nvxf8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("RectangleShape2D_afvch")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+position = Vector2(9.53674e-07, 4.76837e-07)
+scale = Vector2(30, 30)
+texture = SubResource("CanvasTexture_yrhdo")
+
+[node name="Paddle1" type="CharacterBody2D" parent="." groups=["paddle1"]]
+position = Vector2(0, 310)
+collision_mask = 2
+script = ExtResource("1_nhl4e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle1"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_cqg7a")
+
+[node name="ColorRect" type="ColorRect" parent="Paddle1"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_right = 50.0
+offset_bottom = 20.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Paddle2" type="CharacterBody2D" parent="." groups=["paddle2"]]
+position = Vector2(0, -310)
+rotation = 3.14159
+script = ExtResource("2_n5kwi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle2"]
+shape = SubResource("SegmentShape2D_b6ti4")
+metadata/_edit_lock_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Paddle2"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_right = 50.0
+offset_bottom = 20.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="WinLabel" type="RichTextLabel" parent="."]
+offset_left = 403.0
+offset_top = -68.0
+offset_right = 598.0
+offset_bottom = 80.0
+theme_override_font_sizes/normal_font_size = 25
+
+[connection signal="timeout" from="RestartTimer" to="." method="_on_restart_timer_timeout"]
+[connection signal="body_entered" from="GoalP1" to="." method="_on_goal_p1_body_entered"]
+[connection signal="body_entered" from="GoalP2" to="." method="_on_goal_p2_body_entered"]

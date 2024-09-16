@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0a03idihtv0m"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_a2q40"]
+[ext_resource type="Texture2D" uid="uid://b08j3e0v7d8xu" path="res://frame.png" id="2_7ma4m"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_a2q40")
+
+[node name="StartText" type="RichTextLabel" parent="."]
+offset_left = 467.0
+offset_top = 101.0
+offset_right = 772.0
+offset_bottom = 246.0
+theme_override_font_sizes/normal_font_size = 30
+text = "0 Voters Registered
+
+0/0 Voters Ready"
+fit_content = true
+scroll_active = false
+
+[node name="QrCodeSprite" type="Sprite2D" parent="."]
+position = Vector2(614, 436)
+texture = ExtResource("2_7ma4m")
+
+[node name="UrlLabel" type="Label" parent="."]
+offset_left = 217.0
+offset_top = 640.0
+offset_right = 1098.0
+offset_bottom = 679.0
+theme_override_font_sizes/font_size = 28
+text = "Resigster at: https://kirakiramagic.me/alt_pong/voting_pong.html"
