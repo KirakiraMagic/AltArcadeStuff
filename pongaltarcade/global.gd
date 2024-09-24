@@ -13,8 +13,8 @@ signal reset_voting()
 signal got_id()
 
 # The URL we will connect to.
-#var websocket_url = "wss://c-98-43-186-44.hsd1.co.comcast.net:5000"
-var websocket_url = "ws://localhost:5000"
+var websocket_url = "wss://c-98-43-186-44.hsd1.co.comcast.net:5000"
+#var websocket_url = "ws://localhost:5000"
 var socket := WebSocketPeer.new()
 
 func _ready():

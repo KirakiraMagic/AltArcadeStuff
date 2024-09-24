@@ -14,8 +14,8 @@ func _process(delta):
 
 #The ball enters the goal behind p1
 func _on_goal_p1_body_entered(body):
-	print("hello")
 	if body.is_in_group("ball"):
+		$TrumpConceptAudio.play(0.0)
 		p2_score += 1
 		if check_finish() == false:
 			Global.restart_vote()
@@ -23,8 +23,8 @@ func _on_goal_p1_body_entered(body):
 
 #The ball enters the goal behind p2
 func _on_goal_p2_body_entered(body):
-	print("hello")
 	if body.is_in_group("ball"):
+		$KamalaBratAudio.play(0.0)
 		p1_score += 1
 		if check_finish() == false:
 			Global.restart_vote()
